@@ -24,7 +24,7 @@ Package: iptables
 Multi-Arch: foreign
 Architecture: linux-any
 Depends: libip4tc0 (=${binary:Version}),
-         libip6tc0 (=${binary:Version}),
+         libip6tc2 (=${binary:Version}),
          libiptc0 (=${binary:Version}),
          libxtables12 (=${binary:Version}),
          ${misc:Depends},
@@ -171,7 +171,7 @@ Description: Development files for libip4tc
  .
  This package provides development files and static libraries for libip4tc.
 
-Package: libip6tc0
+Package: libip6tc2
 Priority: optional
 Multi-Arch: same
 Architecture: linux-any
@@ -195,7 +195,7 @@ Architecture: linux-any
 Multi-Arch: same
 Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
-Depends: libip6tc0 (=${binary:Version}),
+Depends: libip6tc2 (=${binary:Version}),
          libiptc0 (=${binary:Version}),
          ${misc:Depends}
 Replaces: iptables-dev (<< 1.6.0-3)
