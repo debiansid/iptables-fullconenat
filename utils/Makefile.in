@@ -94,8 +94,9 @@ sbin_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3)
 @HAVE_LIBNFNETLINK_TRUE@am__append_1 = nfnl_osf.8
 @HAVE_LIBNFNETLINK_TRUE@am__append_2 = nfnl_osf
 @HAVE_LIBNFNETLINK_TRUE@am__append_3 = pf.os
-@ENABLE_BPFC_TRUE@am__append_4 = nfbpf_compile
-@ENABLE_SYNCONF_TRUE@am__append_5 = nfsynproxy
+@ENABLE_BPFC_TRUE@am__append_4 = nfbpf_compile.8
+@ENABLE_BPFC_TRUE@am__append_5 = nfbpf_compile
+@ENABLE_SYNCONF_TRUE@am__append_6 = nfsynproxy
 subdir = utils
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_linker_flags.m4 \
@@ -107,7 +108,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES = nfnl_osf.8
+CONFIG_CLEAN_FILES = nfnl_osf.8 nfbpf_compile.8
 CONFIG_CLEAN_VPATH_FILES =
 @HAVE_LIBNFNETLINK_TRUE@am__EXEEXT_1 = nfnl_osf$(EXEEXT)
 @ENABLE_BPFC_TRUE@am__EXEEXT_2 = nfbpf_compile$(EXEEXT)
@@ -220,8 +221,8 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 ETAGS = etags
 CTAGS = ctags
-am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/nfnl_osf.8.in \
-	$(top_srcdir)/build-aux/depcomp
+am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/nfbpf_compile.8.in \
+	$(srcdir)/nfnl_osf.8.in $(top_srcdir)/build-aux/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 pkgdatadir = @pkgdatadir@
 ACLOCAL = @ACLOCAL@
@@ -379,11 +380,11 @@ AM_CPPFLAGS = ${regular_CPPFLAGS} -I${top_builddir}/include \
               -I${top_srcdir}/include ${libnfnetlink_CFLAGS}
 
 pkgdata_DATA = $(am__append_3)
-man_MANS = $(am__append_1)
+man_MANS = $(am__append_1) $(am__append_4)
 @HAVE_LIBNFNETLINK_TRUE@nfnl_osf_LDADD = ${libnfnetlink_LIBS}
 @ENABLE_BPFC_TRUE@nfbpf_compile_LDADD = -lpcap
 @ENABLE_SYNCONF_TRUE@nfsynproxy_LDADD = -lpcap
-CLEANFILES = nfnl_osf.8
+CLEANFILES = nfnl_osf.8 nfbpf_compile.8
 all: all-am
 
 .SUFFIXES:
@@ -418,6 +419,8 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 nfnl_osf.8: $(top_builddir)/config.status $(srcdir)/nfnl_osf.8.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+nfbpf_compile.8: $(top_builddir)/config.status $(srcdir)/nfbpf_compile.8.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-sbinPROGRAMS: $(sbin_PROGRAMS)
 	@$(NORMAL_INSTALL)

@@ -91,14 +91,10 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 @ENABLE_STATIC_TRUE@am__append_1 = -DALL_INCLUSIVE
-@ENABLE_IPV4_TRUE@am__append_2 = iptables-save.c iptables-restore.c \
-@ENABLE_IPV4_TRUE@                         iptables-standalone.c iptables.c
-
+@ENABLE_IPV4_TRUE@am__append_2 = iptables-standalone.c iptables.c
 @ENABLE_IPV4_TRUE@am__append_3 = -DENABLE_IPV4
 @ENABLE_IPV4_TRUE@am__append_4 = ../libiptc/libip4tc.la ../extensions/libext4.a
-@ENABLE_IPV6_TRUE@am__append_5 = ip6tables-save.c ip6tables-restore.c \
-@ENABLE_IPV6_TRUE@                          ip6tables-standalone.c ip6tables.c
-
+@ENABLE_IPV6_TRUE@am__append_5 = ip6tables-standalone.c ip6tables.c
 @ENABLE_IPV6_TRUE@am__append_6 = -DENABLE_IPV6
 @ENABLE_IPV6_TRUE@am__append_7 = ../libiptc/libip6tc.la ../extensions/libext6.a
 
@@ -107,6 +103,9 @@ host_triplet = @host@
 @ENABLE_NFTABLES_TRUE@@ENABLE_STATIC_TRUE@am__append_9 = -DALL_INCLUSIVE
 sbin_PROGRAMS = xtables-legacy-multi$(EXEEXT) $(am__EXEEXT_1)
 @ENABLE_NFTABLES_TRUE@am__append_10 = xtables-nft-multi
+@ENABLE_NFTABLES_TRUE@am__append_11 = arptables-nft.8 arptables-nft-restore.8 arptables-nft-save.8 \
+@ENABLE_NFTABLES_TRUE@		   ebtables-nft.8
+
 subdir = iptables
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_linker_flags.m4 \
@@ -127,22 +126,19 @@ am__installdirs = "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(man1dir)" \
 	"$(DESTDIR)$(man8dir)" "$(DESTDIR)$(pkgconfigdir)"
 PROGRAMS = $(sbin_PROGRAMS)
 am__xtables_legacy_multi_SOURCES_DIST = xtables-legacy-multi.c \
-	iptables-xml.c iptables-save.c iptables-restore.c \
-	iptables-standalone.c iptables.c ip6tables-save.c \
-	ip6tables-restore.c ip6tables-standalone.c ip6tables.c \
-	xshared.c
-@ENABLE_IPV4_TRUE@am__objects_1 = xtables_legacy_multi-iptables-save.$(OBJEXT) \
-@ENABLE_IPV4_TRUE@	xtables_legacy_multi-iptables-restore.$(OBJEXT) \
-@ENABLE_IPV4_TRUE@	xtables_legacy_multi-iptables-standalone.$(OBJEXT) \
+	iptables-xml.c iptables-standalone.c iptables.c \
+	ip6tables-standalone.c ip6tables.c xshared.c \
+	iptables-restore.c iptables-save.c
+@ENABLE_IPV4_TRUE@am__objects_1 = xtables_legacy_multi-iptables-standalone.$(OBJEXT) \
 @ENABLE_IPV4_TRUE@	xtables_legacy_multi-iptables.$(OBJEXT)
-@ENABLE_IPV6_TRUE@am__objects_2 = xtables_legacy_multi-ip6tables-save.$(OBJEXT) \
-@ENABLE_IPV6_TRUE@	xtables_legacy_multi-ip6tables-restore.$(OBJEXT) \
-@ENABLE_IPV6_TRUE@	xtables_legacy_multi-ip6tables-standalone.$(OBJEXT) \
+@ENABLE_IPV6_TRUE@am__objects_2 = xtables_legacy_multi-ip6tables-standalone.$(OBJEXT) \
 @ENABLE_IPV6_TRUE@	xtables_legacy_multi-ip6tables.$(OBJEXT)
 am_xtables_legacy_multi_OBJECTS =  \
 	xtables_legacy_multi-xtables-legacy-multi.$(OBJEXT) \
 	xtables_legacy_multi-iptables-xml.$(OBJEXT) $(am__objects_1) \
-	$(am__objects_2) xtables_legacy_multi-xshared.$(OBJEXT)
+	$(am__objects_2) xtables_legacy_multi-xshared.$(OBJEXT) \
+	xtables_legacy_multi-iptables-restore.$(OBJEXT) \
+	xtables_legacy_multi-iptables-save.$(OBJEXT)
 xtables_legacy_multi_OBJECTS = $(am_xtables_legacy_multi_OBJECTS)
 xtables_legacy_multi_DEPENDENCIES = ../extensions/libext.a \
 	$(am__append_4) $(am__append_7) ../libxtables/libxtables.la
@@ -475,7 +471,8 @@ AM_CPPFLAGS = ${regular_CPPFLAGS} -I${top_builddir}/include -I${top_srcdir}/incl
 AM_YFLAGS = -d
 BUILT_SOURCES = $(am__append_8)
 xtables_legacy_multi_SOURCES = xtables-legacy-multi.c iptables-xml.c \
-	$(am__append_2) $(am__append_5) xshared.c
+	$(am__append_2) $(am__append_5) xshared.c iptables-restore.c \
+	iptables-save.c
 xtables_legacy_multi_CFLAGS = ${AM_CFLAGS} $(am__append_1) \
 	$(am__append_3) $(am__append_6)
 xtables_legacy_multi_LDADD = ../extensions/libext.a $(am__append_4) \
@@ -504,12 +501,12 @@ xtables_legacy_multi_LDADD = ../extensions/libext.a $(am__append_4) \
 @ENABLE_NFTABLES_TRUE@	../extensions/libext_arpt.a \
 @ENABLE_NFTABLES_TRUE@	../libxtables/libxtables.la -lm
 man_MANS = iptables.8 iptables-restore.8 iptables-save.8 \
-                   iptables-xml.1 ip6tables.8 ip6tables-restore.8 \
-                   ip6tables-save.8 iptables-extensions.8 \
-                   xtables-nft.8 xtables-translate.8 xtables-legacy.8 \
-                   xtables-monitor.8
-
+	iptables-xml.1 ip6tables.8 ip6tables-restore.8 \
+	ip6tables-save.8 iptables-extensions.8 xtables-nft.8 \
+	xtables-translate.8 xtables-legacy.8 iptables-translate.8 \
+	ip6tables-translate.8 xtables-monitor.8 $(am__append_11)
 CLEANFILES = iptables.8 xtables-monitor.8 \
+		   iptables-translate.8 ip6tables-translate.8 \
 		   xtables-config-parser.c xtables-config-syntax.c
 
 vx_bin_links = iptables-xml
@@ -649,8 +646,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_legacy_multi-ip6tables-restore.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_legacy_multi-ip6tables-save.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_legacy_multi-ip6tables-standalone.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_legacy_multi-ip6tables.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_legacy_multi-iptables-restore.Po@am__quote@
@@ -732,34 +727,6 @@ xtables_legacy_multi-iptables-xml.obj: iptables-xml.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables-xml.obj `if test -f 'iptables-xml.c'; then $(CYGPATH_W) 'iptables-xml.c'; else $(CYGPATH_W) '$(srcdir)/iptables-xml.c'; fi`
 
-xtables_legacy_multi-iptables-save.o: iptables-save.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-iptables-save.o -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-iptables-save.Tpo -c -o xtables_legacy_multi-iptables-save.o `test -f 'iptables-save.c' || echo '$(srcdir)/'`iptables-save.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-iptables-save.Tpo $(DEPDIR)/xtables_legacy_multi-iptables-save.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='iptables-save.c' object='xtables_legacy_multi-iptables-save.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables-save.o `test -f 'iptables-save.c' || echo '$(srcdir)/'`iptables-save.c
-
-xtables_legacy_multi-iptables-save.obj: iptables-save.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-iptables-save.obj -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-iptables-save.Tpo -c -o xtables_legacy_multi-iptables-save.obj `if test -f 'iptables-save.c'; then $(CYGPATH_W) 'iptables-save.c'; else $(CYGPATH_W) '$(srcdir)/iptables-save.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-iptables-save.Tpo $(DEPDIR)/xtables_legacy_multi-iptables-save.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='iptables-save.c' object='xtables_legacy_multi-iptables-save.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables-save.obj `if test -f 'iptables-save.c'; then $(CYGPATH_W) 'iptables-save.c'; else $(CYGPATH_W) '$(srcdir)/iptables-save.c'; fi`
-
-xtables_legacy_multi-iptables-restore.o: iptables-restore.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-iptables-restore.o -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-iptables-restore.Tpo -c -o xtables_legacy_multi-iptables-restore.o `test -f 'iptables-restore.c' || echo '$(srcdir)/'`iptables-restore.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-iptables-restore.Tpo $(DEPDIR)/xtables_legacy_multi-iptables-restore.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='iptables-restore.c' object='xtables_legacy_multi-iptables-restore.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables-restore.o `test -f 'iptables-restore.c' || echo '$(srcdir)/'`iptables-restore.c
-
-xtables_legacy_multi-iptables-restore.obj: iptables-restore.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-iptables-restore.obj -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-iptables-restore.Tpo -c -o xtables_legacy_multi-iptables-restore.obj `if test -f 'iptables-restore.c'; then $(CYGPATH_W) 'iptables-restore.c'; else $(CYGPATH_W) '$(srcdir)/iptables-restore.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-iptables-restore.Tpo $(DEPDIR)/xtables_legacy_multi-iptables-restore.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='iptables-restore.c' object='xtables_legacy_multi-iptables-restore.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables-restore.obj `if test -f 'iptables-restore.c'; then $(CYGPATH_W) 'iptables-restore.c'; else $(CYGPATH_W) '$(srcdir)/iptables-restore.c'; fi`
-
 xtables_legacy_multi-iptables-standalone.o: iptables-standalone.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-iptables-standalone.o -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-iptables-standalone.Tpo -c -o xtables_legacy_multi-iptables-standalone.o `test -f 'iptables-standalone.c' || echo '$(srcdir)/'`iptables-standalone.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-iptables-standalone.Tpo $(DEPDIR)/xtables_legacy_multi-iptables-standalone.Po
@@ -787,34 +754,6 @@ xtables_legacy_multi-iptables.obj: iptables.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='iptables.c' object='xtables_legacy_multi-iptables.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables.obj `if test -f 'iptables.c'; then $(CYGPATH_W) 'iptables.c'; else $(CYGPATH_W) '$(srcdir)/iptables.c'; fi`
-
-xtables_legacy_multi-ip6tables-save.o: ip6tables-save.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-ip6tables-save.o -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-ip6tables-save.Tpo -c -o xtables_legacy_multi-ip6tables-save.o `test -f 'ip6tables-save.c' || echo '$(srcdir)/'`ip6tables-save.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-ip6tables-save.Tpo $(DEPDIR)/xtables_legacy_multi-ip6tables-save.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ip6tables-save.c' object='xtables_legacy_multi-ip6tables-save.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-ip6tables-save.o `test -f 'ip6tables-save.c' || echo '$(srcdir)/'`ip6tables-save.c
-
-xtables_legacy_multi-ip6tables-save.obj: ip6tables-save.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-ip6tables-save.obj -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-ip6tables-save.Tpo -c -o xtables_legacy_multi-ip6tables-save.obj `if test -f 'ip6tables-save.c'; then $(CYGPATH_W) 'ip6tables-save.c'; else $(CYGPATH_W) '$(srcdir)/ip6tables-save.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-ip6tables-save.Tpo $(DEPDIR)/xtables_legacy_multi-ip6tables-save.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ip6tables-save.c' object='xtables_legacy_multi-ip6tables-save.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-ip6tables-save.obj `if test -f 'ip6tables-save.c'; then $(CYGPATH_W) 'ip6tables-save.c'; else $(CYGPATH_W) '$(srcdir)/ip6tables-save.c'; fi`
-
-xtables_legacy_multi-ip6tables-restore.o: ip6tables-restore.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-ip6tables-restore.o -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-ip6tables-restore.Tpo -c -o xtables_legacy_multi-ip6tables-restore.o `test -f 'ip6tables-restore.c' || echo '$(srcdir)/'`ip6tables-restore.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-ip6tables-restore.Tpo $(DEPDIR)/xtables_legacy_multi-ip6tables-restore.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ip6tables-restore.c' object='xtables_legacy_multi-ip6tables-restore.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-ip6tables-restore.o `test -f 'ip6tables-restore.c' || echo '$(srcdir)/'`ip6tables-restore.c
-
-xtables_legacy_multi-ip6tables-restore.obj: ip6tables-restore.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-ip6tables-restore.obj -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-ip6tables-restore.Tpo -c -o xtables_legacy_multi-ip6tables-restore.obj `if test -f 'ip6tables-restore.c'; then $(CYGPATH_W) 'ip6tables-restore.c'; else $(CYGPATH_W) '$(srcdir)/ip6tables-restore.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-ip6tables-restore.Tpo $(DEPDIR)/xtables_legacy_multi-ip6tables-restore.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ip6tables-restore.c' object='xtables_legacy_multi-ip6tables-restore.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-ip6tables-restore.obj `if test -f 'ip6tables-restore.c'; then $(CYGPATH_W) 'ip6tables-restore.c'; else $(CYGPATH_W) '$(srcdir)/ip6tables-restore.c'; fi`
 
 xtables_legacy_multi-ip6tables-standalone.o: ip6tables-standalone.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-ip6tables-standalone.o -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-ip6tables-standalone.Tpo -c -o xtables_legacy_multi-ip6tables-standalone.o `test -f 'ip6tables-standalone.c' || echo '$(srcdir)/'`ip6tables-standalone.c
@@ -857,6 +796,34 @@ xtables_legacy_multi-xshared.obj: xshared.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='xshared.c' object='xtables_legacy_multi-xshared.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-xshared.obj `if test -f 'xshared.c'; then $(CYGPATH_W) 'xshared.c'; else $(CYGPATH_W) '$(srcdir)/xshared.c'; fi`
+
+xtables_legacy_multi-iptables-restore.o: iptables-restore.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-iptables-restore.o -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-iptables-restore.Tpo -c -o xtables_legacy_multi-iptables-restore.o `test -f 'iptables-restore.c' || echo '$(srcdir)/'`iptables-restore.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-iptables-restore.Tpo $(DEPDIR)/xtables_legacy_multi-iptables-restore.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='iptables-restore.c' object='xtables_legacy_multi-iptables-restore.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables-restore.o `test -f 'iptables-restore.c' || echo '$(srcdir)/'`iptables-restore.c
+
+xtables_legacy_multi-iptables-restore.obj: iptables-restore.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-iptables-restore.obj -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-iptables-restore.Tpo -c -o xtables_legacy_multi-iptables-restore.obj `if test -f 'iptables-restore.c'; then $(CYGPATH_W) 'iptables-restore.c'; else $(CYGPATH_W) '$(srcdir)/iptables-restore.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-iptables-restore.Tpo $(DEPDIR)/xtables_legacy_multi-iptables-restore.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='iptables-restore.c' object='xtables_legacy_multi-iptables-restore.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables-restore.obj `if test -f 'iptables-restore.c'; then $(CYGPATH_W) 'iptables-restore.c'; else $(CYGPATH_W) '$(srcdir)/iptables-restore.c'; fi`
+
+xtables_legacy_multi-iptables-save.o: iptables-save.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-iptables-save.o -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-iptables-save.Tpo -c -o xtables_legacy_multi-iptables-save.o `test -f 'iptables-save.c' || echo '$(srcdir)/'`iptables-save.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-iptables-save.Tpo $(DEPDIR)/xtables_legacy_multi-iptables-save.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='iptables-save.c' object='xtables_legacy_multi-iptables-save.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables-save.o `test -f 'iptables-save.c' || echo '$(srcdir)/'`iptables-save.c
+
+xtables_legacy_multi-iptables-save.obj: iptables-save.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -MT xtables_legacy_multi-iptables-save.obj -MD -MP -MF $(DEPDIR)/xtables_legacy_multi-iptables-save.Tpo -c -o xtables_legacy_multi-iptables-save.obj `if test -f 'iptables-save.c'; then $(CYGPATH_W) 'iptables-save.c'; else $(CYGPATH_W) '$(srcdir)/iptables-save.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_legacy_multi-iptables-save.Tpo $(DEPDIR)/xtables_legacy_multi-iptables-save.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='iptables-save.c' object='xtables_legacy_multi-iptables-save.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_legacy_multi_CFLAGS) $(CFLAGS) -c -o xtables_legacy_multi-iptables-save.obj `if test -f 'iptables-save.c'; then $(CYGPATH_W) 'iptables-save.c'; else $(CYGPATH_W) '$(srcdir)/iptables-save.c'; fi`
 
 xtables_nft_multi-xtables-nft-multi.o: xtables-nft-multi.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_nft_multi_CFLAGS) $(CFLAGS) -MT xtables_nft_multi-xtables-nft-multi.o -MD -MP -MF $(DEPDIR)/xtables_nft_multi-xtables-nft-multi.Tpo -c -o xtables_nft_multi-xtables-nft-multi.o `test -f 'xtables-nft-multi.c' || echo '$(srcdir)/'`xtables-nft-multi.c
@@ -1514,6 +1481,9 @@ iptables-extensions.8: iptables-extensions.8.tmpl ../extensions/matches.man ../e
 	${AM_VERBOSE_GEN} sed \
 		-e '/@MATCH@/ r ../extensions/matches.man' \
 		-e '/@TARGET@/ r ../extensions/targets.man' $< >$@;
+
+iptables-translate.8 ip6tables-translate.8:
+	${AM_VERBOSE_GEN} echo '.so man8/xtables-translate.8' >$@
 
 # Using if..fi avoids an ugly "error (ignored)" message :)
 install-exec-hook:
