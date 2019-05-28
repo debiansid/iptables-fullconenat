@@ -23,7 +23,7 @@ Vcs-Browser: https://salsa.debian.org/pkg-netfilter-team/pkg-iptables
 Package: iptables
 Multi-Arch: foreign
 Architecture: linux-any
-Depends: libip4tc0 (=${binary:Version}),
+Depends: libip4tc2 (=${binary:Version}),
          libip6tc2 (=${binary:Version}),
          libiptc0 (=${binary:Version}),
          libxtables12 (=${binary:Version}),
@@ -135,7 +135,7 @@ Description: Development files for libiptc
  .
  This package provides development files and static libraries for libiptc.
 
-Package: libip4tc0
+Package: libip4tc2
 Priority: optional
 Multi-Arch: same
 Architecture: linux-any
@@ -159,7 +159,7 @@ Architecture: linux-any
 Multi-Arch: same
 Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
-Depends: libip4tc0 (=${binary:Version}),
+Depends: libip4tc2 (=${binary:Version}),
          libiptc0 (=${binary:Version}),
          ${misc:Depends}
 Replaces: iptables-dev (<< 1.6.0-3)
