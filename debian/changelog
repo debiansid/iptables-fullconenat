@@ -1,3 +1,17 @@
+iptables (1.8.3-1~exp1) experimental; urgency=medium
+
+  * [89c92f0] New upstream version 1.8.3 (Closes: #929527)
+  * [7c34195] iptables: bump dependency on libnftnl to >= 1.1.3
+  * [ab1a5b7] d/patches: refresh 0104-lintian_hyphens.patch
+  * [3771b10] d/patches: refresh 0201-660748-iptables_apply_man.patch
+  * [97d6c1a] d/patches: refresh 0301-install_iptables_apply.patch
+  * [dd6d2e6] d/patches: drop format-security_fixes_in_libip[6]t_icmp.patch
+  * [6f0e55f] d/patches: drop bug_922973.patch
+  * [5d1950b] libip6tc: bump SONAME from 0 to 2
+  * [cf5f265] libip4tc: bump SONAME from 0 to 2
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Tue, 28 May 2019 12:34:08 +0200
+
 iptables (1.8.2-4) unstable; urgency=medium
 
   * [5053b60] d/rules: reintroduce V=1
