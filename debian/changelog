@@ -1,3 +1,9 @@
+iptables (1.8.3-2) unstable; urgency=medium
+
+  * [1cfe029] d/control: bump std-version to 4.4.0
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Wed, 10 Jul 2019 10:48:04 +0200
+
 iptables (1.8.3-1~exp1) experimental; urgency=medium
 
   * [89c92f0] New upstream version 1.8.3 (Closes: #929527)
