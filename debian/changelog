@@ -1,3 +1,9 @@
+iptables (1.8.3-2~bpo10+1) buster-backports; urgency=medium
+
+  * Rebuild for buster-backports.
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Wed, 17 Jul 2019 13:44:07 +0200
+
 iptables (1.8.3-2) unstable; urgency=medium
 
   * [1cfe029] d/control: bump std-version to 4.4.0
