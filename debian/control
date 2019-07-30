@@ -1,6 +1,6 @@
 Source: iptables
 Section: net
-Priority: important
+Priority: optional
 Maintainer: Debian Netfilter Packaging Team <pkg-netfilter-team@lists.alioth.debian.org>
 Uploaders: Arturo Borrero Gonzalez <arturo@debian.org>,
            Laurence J. Lane <ljlane@debian.org>
@@ -63,7 +63,6 @@ Depends: libip4tc-dev (>= ${source:Version}),
          ${misc:Depends}
 Architecture: any
 Multi-Arch: same
-Priority: optional
 Section: oldlibs
 Description: transitional dummy package
  This is a transitional dummy package. It can safely be removed.
@@ -71,7 +70,6 @@ Description: transitional dummy package
 Package: libxtables12
 Multi-Arch: same
 Architecture: linux-any
-Priority: optional
 Section: libs
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Replaces: iptables (<< 1.4.16.3-3), libxtables11 (>= 1.6.0+snapshot20161117-1)
@@ -86,7 +84,6 @@ Description: netfilter xtables library
 Package: libxtables-dev
 Architecture: linux-any
 Multi-Arch: same
-Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libxtables12 (=${binary:Version}), ${misc:Depends}
 Replaces: iptables-dev (<< 1.6.0-3)
@@ -99,7 +96,6 @@ Description: netfilter xtables library -- development files
  This package includes the development files of libxtables.
 
 Package: libiptc0
-Priority: optional
 Multi-Arch: same
 Architecture: linux-any
 Section: libs
@@ -120,7 +116,6 @@ Description: netfilter libiptc library
 Package: libiptc-dev
 Architecture: linux-any
 Multi-Arch: same
-Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libip4tc-dev (=${binary:Version}),
          libip6tc-dev (=${binary:Version}),
@@ -136,7 +131,6 @@ Description: Development files for libiptc
  This package provides development files and static libraries for libiptc.
 
 Package: libip4tc2
-Priority: optional
 Multi-Arch: same
 Architecture: linux-any
 Section: libs
@@ -157,7 +151,6 @@ Description: netfilter libip4tc library
 Package: libip4tc-dev
 Architecture: linux-any
 Multi-Arch: same
-Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libip4tc2 (=${binary:Version}),
          libiptc0 (=${binary:Version}),
@@ -172,7 +165,6 @@ Description: Development files for libip4tc
  This package provides development files and static libraries for libip4tc.
 
 Package: libip6tc2
-Priority: optional
 Multi-Arch: same
 Architecture: linux-any
 Section: libs
@@ -193,7 +185,6 @@ Description: netfilter libip6tc library
 Package: libip6tc-dev
 Architecture: linux-any
 Multi-Arch: same
-Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libip6tc2 (=${binary:Version}),
          libiptc0 (=${binary:Version}),
