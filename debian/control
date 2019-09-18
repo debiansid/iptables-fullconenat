@@ -29,7 +29,7 @@ Depends: libip4tc2 (=${binary:Version}),
          libxtables12 (=${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
-Suggests: kmod
+Suggests: firewalld, kmod
 Breaks: iptables-nftables-compat (<< 1.6.2~)
 Replaces: iptables-nftables-compat (<< 1.6.2~)
 Recommends: nftables
