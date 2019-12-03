@@ -92,10 +92,10 @@ build_triplet = @build@
 host_triplet = @host@
 subdir = libiptc
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_linker_flags.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -148,12 +148,6 @@ libip6tc_la_OBJECTS = $(am_libip6tc_la_OBJECTS)
 libip6tc_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(libip6tc_la_LDFLAGS) $(LDFLAGS) -o $@
-libiptc_la_DEPENDENCIES = libip4tc.la libip6tc.la
-am_libiptc_la_OBJECTS =
-libiptc_la_OBJECTS = $(am_libiptc_la_OBJECTS)
-libiptc_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(libiptc_la_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -188,10 +182,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libip4tc_la_SOURCES) $(libip6tc_la_SOURCES) \
-	$(libiptc_la_SOURCES)
-DIST_SOURCES = $(libip4tc_la_SOURCES) $(libip6tc_la_SOURCES) \
-	$(libiptc_la_SOURCES)
+SOURCES = $(libip4tc_la_SOURCES) $(libip6tc_la_SOURCES)
+DIST_SOURCES = $(libip4tc_la_SOURCES) $(libip6tc_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -255,9 +247,6 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LEX = @LEX@
-LEXLIB = @LEXLIB@
-LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -291,8 +280,6 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
-YACC = @YACC@
-YFLAGS = @YFLAGS@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -337,7 +324,6 @@ kinclude_CPPFLAGS = @kinclude_CPPFLAGS@
 ksourcedir = @ksourcedir@
 libdir = @libdir@
 libexecdir = @libexecdir@
-libiptc_LDFLAGS2 = @libiptc_LDFLAGS2@
 libmnl_CFLAGS = @libmnl_CFLAGS@
 libmnl_LIBS = @libmnl_LIBS@
 libnetfilter_conntrack_CFLAGS = @libnetfilter_conntrack_CFLAGS@
@@ -375,14 +361,11 @@ xtlibdir = @xtlibdir@
 AM_CFLAGS = ${regular_CFLAGS}
 AM_CPPFLAGS = ${regular_CPPFLAGS} -I${top_builddir}/include -I${top_srcdir}/include ${kinclude_CPPFLAGS}
 pkgconfig_DATA = libiptc.pc libip4tc.pc libip6tc.pc
-lib_LTLIBRARIES = libip4tc.la libip6tc.la libiptc.la
-libiptc_la_SOURCES = 
-libiptc_la_LIBADD = libip4tc.la libip6tc.la
-libiptc_la_LDFLAGS = -version-info 0:0:0 ${libiptc_LDFLAGS2}
+lib_LTLIBRARIES = libip4tc.la libip6tc.la
 libip4tc_la_SOURCES = libip4tc.c
 libip4tc_la_LDFLAGS = -version-info 2:0:0
 libip6tc_la_SOURCES = libip6tc.c
-libip6tc_la_LDFLAGS = -version-info 2:0:0 ${libiptc_LDFLAGS2}
+libip6tc_la_LDFLAGS = -version-info 2:0:0
 all: all-am
 
 .SUFFIXES:
@@ -463,9 +446,6 @@ libip4tc.la: $(libip4tc_la_OBJECTS) $(libip4tc_la_DEPENDENCIES) $(EXTRA_libip4tc
 
 libip6tc.la: $(libip6tc_la_OBJECTS) $(libip6tc_la_DEPENDENCIES) $(EXTRA_libip6tc_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libip6tc_la_LINK) -rpath $(libdir) $(libip6tc_la_OBJECTS) $(libip6tc_la_LIBADD) $(LIBS)
-
-libiptc.la: $(libiptc_la_OBJECTS) $(libiptc_la_DEPENDENCIES) $(EXTRA_libiptc_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libiptc_la_LINK) -rpath $(libdir) $(libiptc_la_OBJECTS) $(libiptc_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
