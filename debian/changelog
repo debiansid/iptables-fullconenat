@@ -1,3 +1,18 @@
+iptables (1.8.4-1) unstable; urgency=medium
+
+  * [c59797a] iptables: no longer Priority: important
+  * [f8bb861] src:iptables: drop iptables-dev transitional package
+    (Closes: #939243)
+  * [4efb6c3] iptables: add Suggest: firewalld
+  * [290749d] New upstream version 1.8.4
+  * [7e5627f] d/patches: refresh 0301-install_iptables_apply.patch
+  * [e31ef86] d/patches: include 0000-upstream-bump-build-dep-libnftnl.patch
+  * [d7ebb42] src:iptables: drop libiptc0, libiptc-dev packages
+  * [8347150] src:iptables: bump debhelper compat to 12
+  * [5b0b408] src:iptables: drop /sbin -> /usr/sbin compat symlinks
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Wed, 04 Dec 2019 11:53:40 +0100
+
 iptables (1.8.3-2) unstable; urgency=medium
 
   * [1cfe029] d/control: bump std-version to 4.4.0
