@@ -84,39 +84,24 @@ Description: netfilter xtables library -- development files
  This package includes the development files of libxtables.
 
 Package: libiptc0
-Multi-Arch: same
 Architecture: linux-any
-Section: libs
-Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, ${shlibs:Depends}
-Description: netfilter libiptc library
- The iptables/xtables framework has been replaced by nftables. You should
- consider migrating now.
- .
- This package contains the user-space iptables C library from the Netfilter
- xtables framework.
- .
- iptables v4/v6 ruleset ADT and kernel interface.
- .
- This library has been considered private for years (and still is), in the
- sense of changing symbols and backward compatibility not guaranteed.
+Priority: optional
+Multi-Arch: same
+Depends: libip4tc2 (=${binary:Version}),
+         ${misc:Depends}
+Section: oldlibs
+Description: transitional dummy package
+ This is a transitional package. It can safely be removed.
 
 Package: libiptc-dev
 Architecture: linux-any
+Priority: optional
 Multi-Arch: same
-Pre-Depends: ${misc:Pre-Depends}
 Depends: libip4tc-dev (=${binary:Version}),
-         libip6tc-dev (=${binary:Version}),
-         libiptc0 (=${binary:Version}),
          ${misc:Depends}
-Replaces: iptables-dev (<< 1.6.0-3)
-Breaks: iptables-dev (<< 1.6.0-3)
-Section: libdevel
-Description: Development files for libiptc
- The iptables/xtables framework has been replaced by nftables. You should
- consider migrating now.
- .
- This package provides development files and static libraries for libiptc.
+Section: oldlibs
+Description: transitional dummy package
+ This is a transitional package. It can safely be removed.
 
 Package: libip4tc2
 Multi-Arch: same
