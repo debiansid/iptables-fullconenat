@@ -160,7 +160,7 @@ static struct chain_head *iptcc_alloc_chain_head(const char *name, int hooknum)
 		return NULL;
 	memset(c, 0, sizeof(*c));
 
-	strncpy(c->name, name, TABLE_MAXNAMELEN);
+	strncpy(c->name, name, TABLE_MAXNAMELEN - 1);
 	c->hooknum = hooknum;
 	INIT_LIST_HEAD(&c->rules);
 
@@ -187,14 +187,6 @@ set_changed(struct xtc_handle *h)
 {
 	h->changed = 1;
 }
-
-#ifdef IPTC_DEBUG
-static void do_check(struct xtc_handle *h, unsigned int line);
-#define CHECK(h) do { if (!getenv("IPTC_NO_CHECK")) do_check((h), __LINE__); } while(0)
-#else
-#define CHECK(h)
-#endif
-
 
 /**********************************************************************
  * iptc blob utility functions (iptcb_*)
@@ -1370,7 +1362,6 @@ retry:
 	if (parse_table(h) < 0)
 		goto error;
 
-	CHECK(h);
 	return h;
 error:
 	TC_FREE(h);
@@ -1417,7 +1408,6 @@ void
 TC_DUMP_ENTRIES(struct xtc_handle *const handle)
 {
 	iptc_fn = TC_DUMP_ENTRIES;
-	CHECK(handle);
 
 	printf("libiptc v%s. %u bytes.\n",
 	       XTABLES_VERSION, handle->entries->size);
@@ -2152,7 +2142,6 @@ TC_READ_COUNTER(const IPT_CHAINLABEL chain,
 	struct rule_head *r;
 
 	iptc_fn = TC_READ_COUNTER;
-	CHECK(*handle);
 
 	if (!(c = iptcc_find_label(chain, handle))) {
 		errno = ENOENT;
@@ -2176,7 +2165,6 @@ TC_ZERO_COUNTER(const IPT_CHAINLABEL chain,
 	struct rule_head *r;
 
 	iptc_fn = TC_ZERO_COUNTER;
-	CHECK(handle);
 
 	if (!(c = iptcc_find_label(chain, handle))) {
 		errno = ENOENT;
@@ -2207,7 +2195,6 @@ TC_SET_COUNTER(const IPT_CHAINLABEL chain,
 	STRUCT_ENTRY *e;
 
 	iptc_fn = TC_SET_COUNTER;
-	CHECK(handle);
 
 	if (!(c = iptcc_find_label(chain, handle))) {
 		errno = ENOENT;
@@ -2398,7 +2385,7 @@ int TC_RENAME_CHAIN(const IPT_CHAINLABEL oldname,
 	iptcc_chain_index_delete_chain(c, handle);
 
 	/* Change the name of the chain */
-	strncpy(c->name, newname, sizeof(IPT_CHAINLABEL));
+	strncpy(c->name, newname, sizeof(IPT_CHAINLABEL) - 1);
 
 	/* Insert sorted into to list again */
 	iptc_insert_chain(handle, c);
@@ -2532,7 +2519,6 @@ TC_COMMIT(struct xtc_handle *handle)
 	unsigned int new_size;
 
 	iptc_fn = TC_COMMIT;
-	CHECK(*handle);
 
 	/* Don't commit if nothing changed. */
 	if (!handle->changed)
