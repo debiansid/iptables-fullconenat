@@ -14,19 +14,20 @@ Index: pkg-iptables/iptables/Makefile.am
 ===================================================================
 --- pkg-iptables.orig/iptables/Makefile.am
 +++ pkg-iptables/iptables/Makefile.am
-@@ -61,7 +61,10 @@ man_MANS         = iptables.8 iptables-r
-                    ip6tables-save.8 iptables-extensions.8 \
-                    xtables-nft.8 xtables-translate.8 xtables-legacy.8 \
-                    iptables-translate.8 ip6tables-translate.8 \
--                   xtables-monitor.8
-+                   xtables-monitor.8 iptables-apply.8 ip6tables-apply.8
+@@ -53,7 +53,11 @@ sbin_PROGRAMS	+= xtables-nft-multi
+ endif
+ man_MANS         = iptables.8 iptables-restore.8 iptables-save.8 \
+                    iptables-xml.1 ip6tables.8 ip6tables-restore.8 \
+-                   ip6tables-save.8 iptables-extensions.8
++                   ip6tables-save.8 iptables-extensions.8 \
++                   iptables-apply.8 ip6tables-apply.8
 +
 +sbin_SCRIPT      = iptables-apply
 +
  if ENABLE_NFTABLES
- man_MANS	+= arptables-nft.8 arptables-nft-restore.8 arptables-nft-save.8 \
- 		   ebtables-nft.8
-@@ -111,3 +114,4 @@ install-exec-hook:
+ man_MANS	+= xtables-nft.8 xtables-translate.8 xtables-legacy.8 \
+                    iptables-translate.8 ip6tables-translate.8 \
+@@ -106,3 +110,4 @@ install-exec-hook:
  	for i in ${v4_sbin_links}; do ${LN_S} -f xtables-legacy-multi "${DESTDIR}${sbindir}/$$i"; done;
  	for i in ${v6_sbin_links}; do ${LN_S} -f xtables-legacy-multi "${DESTDIR}${sbindir}/$$i"; done;
  	for i in ${x_sbin_links}; do ${LN_S} -f xtables-nft-multi "${DESTDIR}${sbindir}/$$i"; done;
