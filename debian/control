@@ -16,7 +16,7 @@ Build-Depends: autoconf,
                libnftnl-dev (>= 1.1.5),
                libtool (>= 2.2.6)
 Standards-Version: 4.4.0
-Homepage: http://www.netfilter.org/
+Homepage: https://www.netfilter.org/
 Vcs-Git: https://salsa.debian.org/pkg-netfilter-team/pkg-iptables
 Vcs-Browser: https://salsa.debian.org/pkg-netfilter-team/pkg-iptables
 
