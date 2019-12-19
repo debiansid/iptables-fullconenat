@@ -25,7 +25,6 @@ Multi-Arch: foreign
 Architecture: linux-any
 Depends: libip4tc2 (=${binary:Version}),
          libip6tc2 (=${binary:Version}),
-         libiptc0 (=${binary:Version}),
          libxtables12 (=${binary:Version}),
          ${misc:Depends},
          ${shlibs:Depends}
@@ -126,7 +125,6 @@ Architecture: linux-any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libip4tc2 (=${binary:Version}),
-         libiptc0 (=${binary:Version}),
          ${misc:Depends}
 Replaces: iptables-dev (<< 1.6.0-3)
 Breaks: iptables-dev (<< 1.6.0-3)
@@ -160,7 +158,6 @@ Architecture: linux-any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libip6tc2 (=${binary:Version}),
-         libiptc0 (=${binary:Version}),
          ${misc:Depends}
 Replaces: iptables-dev (<< 1.6.0-3)
 Breaks: iptables-dev (<< 1.6.0-3)
