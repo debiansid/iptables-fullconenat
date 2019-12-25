@@ -17,7 +17,7 @@ Build-Depends: autoconf,
                libtool (>= 2.2.6)
 Standards-Version: 4.4.0
 Homepage: https://www.netfilter.org/
-Vcs-Git: https://salsa.debian.org/pkg-netfilter-team/pkg-iptables
+Vcs-Git: https://salsa.debian.org/pkg-netfilter-team/pkg-iptables.git
 Vcs-Browser: https://salsa.debian.org/pkg-netfilter-team/pkg-iptables
 
 Package: iptables
