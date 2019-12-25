@@ -370,7 +370,7 @@ License: GPL-2+
 
 Files: iptables/nft-arp.c
 Copyright: 2013 Pablo Neira Ayuso <pablo@netfilter.org>
-	   2013 Giuseppe Longo <giuseppelng@gmail.com>
+           2013 Giuseppe Longo <giuseppelng@gmail.com>
 License: GPL-2+
 
 Files: iptables/nft-bridge.c
@@ -379,7 +379,7 @@ License: GPL-2+
 
 Files: iptables/nft-ipv4.c iptables/nft-ipv6.c iptables/nft-shared.c
 Copyright: 2012-2013 Pablo Neira Ayuso <pablo@netfilter.org>
-	   2013 Tomasz Bursztyka <tomasz.bursztyka@linux.intel.com>
+           2013 Tomasz Bursztyka <tomasz.bursztyka@linux.intel.com>
 License: GPL-2+
 
 Files: iptables/xtables-arp.c iptables/xtables-eb.c
