@@ -26,6 +26,7 @@ Architecture: linux-any
 Depends: libip4tc2 (=${binary:Version}),
          libip6tc2 (=${binary:Version}),
          libxtables12 (=${binary:Version}),
+         netbase (>= 6.0),
          ${misc:Depends},
          ${shlibs:Depends}
 Suggests: firewalld, kmod
