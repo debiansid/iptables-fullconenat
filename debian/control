@@ -3,6 +3,7 @@ Section: net
 Priority: optional
 Maintainer: Debian Netfilter Packaging Team <pkg-netfilter-team@lists.alioth.debian.org>
 Uploaders: Arturo Borrero Gonzalez <arturo@debian.org>,
+           Alberto Molina Coballes <alb.molina@gmail.com>,
            Laurence J. Lane <ljlane@debian.org>
 Build-Depends: autoconf,
                automake,
