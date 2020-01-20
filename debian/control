@@ -44,17 +44,17 @@ Description: administration tools for packet filtering and NAT
  .
  This package contains several different utilities, the most important ones:
  .
- iptables, iptables-save, iptables-restore (nft-based version)
+ iptables-nft, iptables-nft-save, iptables-nft-restore (nft-based version)
  .
- iptables, iptables-save, iptables-restore (legacy version)
+ iptables-legacy, iptables-legacy-save, iptables-legacy-restore (legacy version)
  .
- ip6tables, ip6tables-save, ip6tables-restore (nft-based version)
+ ip6tables-nft, ip6tables-nft-save, ip6tables-nft-restore (nft-based version)
  .
- ip6tables, ip6tables-save, ip6tables-restore (legacy version)
+ ip6tables-legacy, ip6tables-legacy-save, ip6tables-legacy-restore (legacy version)
  .
- arptables, arptables-save, arptables-restore (nft-based version)
+ arptables-nft, arptables-nft-save, arptables-nft-restore (nft-based version)
  .
- ebtables, ebtables-save, ebtables-restore (nft-based version)
+ ebtables-nft, ebtables-nft-save, ebtables-nft-restore (nft-based version)
 
 Package: libxtables12
 Multi-Arch: same
