@@ -4,4 +4,3 @@ usr/include/libiptc/libxtc.h
 usr/include/libiptc/xtcshared.h
 usr/lib/*/libip4tc.so
 usr/lib/*/pkgconfig/libip4tc.pc
-usr/lib/*/pkgconfig/libiptc.pc

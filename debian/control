@@ -97,10 +97,14 @@ Package: libiptc-dev
 Architecture: linux-any
 Multi-Arch: same
 Depends: libip4tc-dev (=${binary:Version}),
+         libip6tc-dev (=${binary:Version}),
          ${misc:Depends}
-Section: oldlibs
-Description: transitional dummy package
- This is a transitional package. It can safely be removed.
+Section: libs
+Description: Common development files for libiptc
+ The iptables/xtables framework has been replaced by nftables. You should
+ consider migrating now.
+ .
+ This package provides development files (pkg-config) for libiptc.
 
 Package: libip4tc2
 Multi-Arch: same
