@@ -1,3 +1,36 @@
+iptables (1.8.4-2) unstable; urgency=medium
+
+  [ Alberto Molina Coballes ]
+  * [740ac01] d/control: refresh homepage (Closes: #946253)
+  * [983ab27] d/control: drop dependencies upon libiptc0 (Closes: #946202)
+
+  [ Debian Janitor ]
+  * [7d57346] Set debhelper-compat version in Build-Depends.
+  * [5d19fc0] debian/copyright: use spaces rather than tabs to start
+    continuation lines.
+  * [18f2cea] Move transitional packages libiptc0 to oldlibs/optional per
+    policy 4.0.1.
+  * [d7e5843] Set upstream metadata fields: Repository.
+  * [d3d04fb] Drop unnecessary dependency on dh-autoreconf.
+  * [13ed20f] Use canonical URL in Vcs-Git.
+  * [6285405] Update standards version to 4.4.1, no changes needed.
+
+  [ Alberto Molina Coballes ]
+  * [d7ad217] d/control: add dependency upon netbase (Closes: #946932)
+
+  [ Debian Janitor ]
+  * [249fc99] Refer to common license file for Artistic.
+
+  [ Arturo Borrero Gonzalez ]
+  * [3892140] src:iptables: add Alberto Molina to Uploaders
+  * [d36d29f] d/patches: add 0000-upstream-fix-restore-noflush.patch
+    (Closes: #946289)
+  * [3a66221] libiptc-dev: reintroduce package with shared pkg-config file
+    (Closes: #947176, #946202)
+  * [474f1aa] iptables: clarify binary utilities names (Closes: #946258)
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Mon, 20 Jan 2020 14:20:19 +0100
+
 iptables (1.8.4-1) unstable; urgency=medium
 
   * [c59797a] iptables: no longer Priority: important
