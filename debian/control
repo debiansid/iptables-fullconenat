@@ -99,7 +99,9 @@ Multi-Arch: same
 Depends: libip4tc-dev (=${binary:Version}),
          libip6tc-dev (=${binary:Version}),
          ${misc:Depends}
-Section: libs
+Replaces: libip4tc-dev (<< 1.8.4-2)
+Breaks: libip4tc-dev (<< 1.8.4-2)
+Section: libdevel
 Description: Common development files for libiptc
  The iptables/xtables framework has been replaced by nftables. You should
  consider migrating now.
