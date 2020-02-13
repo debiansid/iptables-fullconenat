@@ -1,3 +1,14 @@
+iptables (1.8.4-3) unstable; urgency=medium
+
+  [ Alberto Molina Coballes ]
+  * [d87a98a] libiptc-dev: add Breaks and Replaces fields (Closes: #949576)
+
+  [ Arturo Borrero Gonzalez ]
+  * [c66f003] d/patches: add 0000-upstream-xtables-restore-empty-lines.patch
+    (Closes: #949518, #951102)
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Thu, 13 Feb 2020 12:20:19 +0100
+
 iptables (1.8.4-2) unstable; urgency=medium
 
   [ Alberto Molina Coballes ]
