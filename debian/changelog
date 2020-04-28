@@ -117,7 +117,8 @@ iptables (1.8.2-1) unstable; urgency=medium
   * [31d2d6e] d/NEWS: fix typos (Closes: #912981)
   * [b24cf92] iptables: don't ship paths served by update-alternatives
     (Closes: #911899)
-  * [f5ec47b] d/patches: cherry-pick format-security_fixes_in_libip[6]t_icmp.patch
+  * [f5ec47b] d/patches: cherry-pick
+    format-security_fixes_in_libip[6]t_icmp.patch
   * [2017f99] d/libxtables12.symbols: add new symbols
 
  -- Arturo Borrero Gonzalez <arturo@debian.org>  Thu, 15 Nov 2018 12:33:36 +0100
@@ -157,7 +158,8 @@ iptables (1.8.0-1~exp1) experimental; urgency=medium
   * [f6022b6] d/patches/: refresh 0201-660748-iptables_apply_man.patch
   * [de3df70] iptables: merge iptables-nftables-compat package
   * [9e6437c] d/libxtables12.symbols: refresh file
-  * [7f8aa9f] debian/patches/series:0301-install_iptables_apply.patch: typo sbion
+  * [7f8aa9f] debian/patches/series:0301-install_iptables_apply.patch: typo
+    sbion
 
  -- Arturo Borrero Gonzalez <arturo@debian.org>  Thu, 27 Sep 2018 13:47:59 +0200
 
@@ -340,15 +342,19 @@ iptables (1.6.0-1) experimental; urgency=medium
   * [569bc44] d/: put arp and bridge modules in iptables-nftables-compat package
   * [90738ae] d/copyright: refresh copyright file
   * [57d17b1] iptables-nftables-compat: include compat tools (links)
-  * [4940e7a] d/control: recommends nftables in the iptables-nftables-compat package
-  * [7814c21] d/control: give more information in the description of iptables-nftables-compat
+  * [4940e7a] d/control: recommends nftables in the iptables-nftables-compat
+    package
+  * [7814c21] d/control: give more information in the description of
+    iptables-nftables-compat
   * [d41dd7d] d/control: bump libxtables10 to libxtables11
-  * [81bb804] d/control: the iptables-nftables-compat package depends on iptables
+  * [81bb804] d/control: the iptables-nftables-compat package depends on
+    iptables
   * [a5b4148] d/: wrap-and-sort
   * [d0c6615] d/control: bump standars to 3.9.6
   * [9ae565f] iptables-nftables-compat: link compat manpages to the originals
   * [d0f191f] d/patches: refresh 0101-changelog.patch
-  * [ef507da] iptables-nftables-compat: link manpage also for xtables-compat-multi
+  * [ef507da] iptables-nftables-compat: link manpage also for
+    xtables-compat-multi
   * [453ee4c] d/control: add Vcs-Git and Vcs-Browser fields
   * [8e52d5b] d/changelog: upload is for experimental rather than unstable
 
