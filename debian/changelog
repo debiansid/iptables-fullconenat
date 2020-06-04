@@ -1,3 +1,18 @@
+iptables (1.8.5-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * [c3deeb3] Wrap long lines in changelog entries: 1.8.2-1, 1.8.0-1~exp1,
+  1.6.0-1.
+  * [214468e] Update standards version to 4.5.0, no changes needed.
+
+  [ Arturo Borrero Gonzalez ]
+  * [eb1d7c5] New upstream version 1.8.5 (Closes: #950535)
+  * [7a119db] d/patches: drop all patches
+  * [ec63c87] libxtables12.symbols: add new symbol
+  * [4056ce6] iptables: bump debhelper-compat to 13
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Thu, 04 Jun 2020 13:33:22 +0200
+
 iptables (1.8.4-3) unstable; urgency=medium
 
   [ Alberto Molina Coballes ]
