@@ -1,3 +1,16 @@
+iptables (1.8.5-2) unstable; urgency=medium
+
+  [ Alberto Molina Coballes ]
+  * [d90516d] d/control: modify breaks and replaces fields (Closes: #949576)
+  * [4754a45] d/not-installed: arch independ files
+  * [780330f] d/tests/control: Run iptables-legacy-* tests explicitly
+
+  [ Arturo Borrero Gonzalez ]
+  * [6fb6557] d/patches: add 0000-upstream-fix-xtables-translate.patch
+    (Closes: #962724)
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Wed, 24 Jun 2020 10:56:19 +0200
+
 iptables (1.8.5-1) unstable; urgency=medium
 
   [ Debian Janitor ]
