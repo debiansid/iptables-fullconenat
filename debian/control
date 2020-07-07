@@ -14,7 +14,7 @@ Build-Depends: autoconf,
                libnetfilter-conntrack-dev,
                libnetfilter-conntrack3,
                libnfnetlink-dev,
-               libnftnl-dev (>= 1.1.5),
+               libnftnl-dev (>= 1.1.6),
                libtool (>= 2.2.6)
 Standards-Version: 4.5.0
 Homepage: https://www.netfilter.org/
