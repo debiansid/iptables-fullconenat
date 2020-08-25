@@ -1,3 +1,9 @@
+iptables (1.8.5-3) unstable; urgency=medium
+
+  * [2d587e5] src:iptables: bump build-dep version on libnftnl to 1.1.6
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Tue, 25 Aug 2020 11:56:55 +0200
+
 iptables (1.8.5-2) unstable; urgency=medium
 
   [ Alberto Molina Coballes ]
