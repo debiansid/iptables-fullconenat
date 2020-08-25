@@ -3,7 +3,7 @@
 set -e
 
 # there is no legacy backend to test
-[[ $XT_MULTI == */xtables-nft-multi ]] || { echo "skip $XT_MULTI"; exit 0; }
+[[ $XT_MULTI == *xtables-nft-multi ]] || { echo "skip $XT_MULTI"; exit 0; }
 
 # ebtables-restore reuses preloaded targets and matches, make sure defaults
 # apply to consecutive rules using the same target/match as a previous one
@@ -13,8 +13,7 @@ DUMP='*filter
 -A FORWARD --limit 100 --limit-burst 42 -j ACCEPT
 -A FORWARD --limit 1000 -j ACCEPT
 -A FORWARD --log --log-prefix "foobar"
--A FORWARD --log
-'
+-A FORWARD --log'
 
 # note how limit-burst is 5 in second rule and log-prefix empty in fourth one
 
@@ -25,8 +24,7 @@ EXPECT='*filter
 -A FORWARD --limit 100/sec --limit-burst 42 -j ACCEPT
 -A FORWARD --limit 1000/sec --limit-burst 5 -j ACCEPT
 -A FORWARD --log-level notice --log-prefix "foobar" -j CONTINUE
--A FORWARD --log-level notice --log-prefix "" -j CONTINUE
-'
+-A FORWARD --log-level notice --log-prefix "" -j CONTINUE'
 
 $XT_MULTI ebtables --init-table
 $XT_MULTI ebtables-restore <<<$DUMP

@@ -26,7 +26,7 @@
 #include "nft.h"
 #include "nft-shared.h"
 
-static int nft_ipv4_add(struct nftnl_rule *r, void *data)
+static int nft_ipv4_add(struct nft_handle *h, struct nftnl_rule *r, void *data)
 {
 	struct iptables_command_state *cs = data;
 	struct xtables_rule_match *matchp;
@@ -77,7 +77,7 @@ static int nft_ipv4_add(struct nftnl_rule *r, void *data)
 	add_compat(r, cs->fw.ip.proto, cs->fw.ip.invflags & XT_INV_PROTO);
 
 	for (matchp = cs->matches; matchp; matchp = matchp->next) {
-		ret = add_match(r, matchp->match->m);
+		ret = add_match(h, r, matchp->match->m);
 		if (ret < 0)
 			return ret;
 	}
@@ -261,12 +261,12 @@ static void print_fragment(unsigned int flags, unsigned int invflags,
 	fputc(' ', stdout);
 }
 
-static void nft_ipv4_print_rule(struct nftnl_rule *r, unsigned int num,
-				unsigned int format)
+static void nft_ipv4_print_rule(struct nft_handle *h, struct nftnl_rule *r,
+				unsigned int num, unsigned int format)
 {
 	struct iptables_command_state cs = {};
 
-	nft_rule_to_iptables_command_state(r, &cs);
+	nft_rule_to_iptables_command_state(h, r, &cs);
 
 	print_rule_details(&cs, cs.jumpto, cs.fw.ip.flags,
 			   cs.fw.ip.invflags, cs.fw.ip.proto, num, format);
@@ -288,7 +288,7 @@ static void nft_ipv4_print_rule(struct nftnl_rule *r, unsigned int num,
 	if (!(format & FMT_NONEWLINE))
 		fputc('\n', stdout);
 
-	xtables_rule_matches_free(&cs.matches);
+	nft_clear_iptables_command_state(&cs);
 }
 
 static void save_ipv4_addr(char letter, const struct in_addr *addr,
@@ -450,13 +450,11 @@ struct nft_family_ops nft_family_ops_ipv4 = {
 	.print_header		= print_header,
 	.print_rule		= nft_ipv4_print_rule,
 	.save_rule		= nft_ipv4_save_rule,
-	.save_counters		= save_counters,
 	.save_chain		= nft_ipv46_save_chain,
 	.proto_parse		= nft_ipv4_proto_parse,
 	.post_parse		= nft_ipv4_post_parse,
 	.parse_target		= nft_ipv46_parse_target,
 	.rule_to_cs		= nft_rule_to_iptables_command_state,
 	.clear_cs		= nft_clear_iptables_command_state,
-	.rule_find		= nft_ipv46_rule_find,
 	.xlate			= nft_ipv4_xlate,
 };

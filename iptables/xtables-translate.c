@@ -6,7 +6,7 @@
  * by the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  */
-
+#include "config.h"
 #include <time.h>
 #include "xtables-multi.h"
 #include "nft.h"
@@ -32,16 +32,38 @@
 void xlate_ifname(struct xt_xlate *xl, const char *nftmeta, const char *ifname,
 		  bool invert)
 {
-	char iface[IFNAMSIZ];
-	int ifaclen;
+	int ifaclen = strlen(ifname), i, j;
+	char iface[IFNAMSIZ * 2];
 
-	if (ifname[0] == '\0')
+	if (ifaclen < 1 || ifaclen >= IFNAMSIZ)
 		return;
 
-	strcpy(iface, ifname);
-	ifaclen = strlen(iface);
-	if (iface[ifaclen - 1] == '+')
-		iface[ifaclen - 1] = '*';
+	for (i = 0, j = 0; i < ifaclen + 1; i++, j++) {
+		switch (ifname[i]) {
+		case '*':
+			iface[j++] = '\\';
+			/* fall through */
+		default:
+			iface[j] = ifname[i];
+			break;
+		}
+	}
+
+	if (ifaclen == 1 && ifname[0] == '+') {
+		/* Nftables does not support wildcard only string. Workaround
+		 * is easy, given that this will match always or never
+		 * depending on 'invert' value. To match always, simply don't
+		 * generate an expression. To match never, use an invalid
+		 * interface name (kernel doesn't accept '/' in names) to match
+		 * against. */
+		if (!invert)
+			return;
+		strcpy(iface, "INVAL/D");
+		invert = false;
+	}
+
+	if (iface[j - 2] == '+')
+		iface[j - 2] = '*';
 
 	xt_xlate_add(xl, "%s %s\"%s\" ", nftmeta, invert ? "!= " : "", iface);
 }
@@ -413,7 +435,7 @@ static int dummy_compat_rev(const char *name, uint8_t rev, int opt)
 	return 1;
 }
 
-static struct nft_xt_restore_cb cb_xlate = {
+static const struct nft_xt_restore_cb cb_xlate = {
 	.table_new	= xlate_table_new,
 	.chain_set	= xlate_chain_set,
 	.chain_restore	= xlate_chain_user_restore,
@@ -458,7 +480,7 @@ static int xtables_xlate_main_common(struct nft_handle *h,
 		return 1;
 	}
 
-	if (nft_init(h, tables) < 0) {
+	if (nft_init(h, family, tables) < 0) {
 		fprintf(stderr, "%s/%s Failed to initialize nft: %s\n",
 				xtables_globals.program_name,
 				xtables_globals.program_version,
@@ -487,6 +509,7 @@ static int xtables_xlate_main(int family, const char *progname, int argc,
 		fprintf(stderr, "Translation not implemented\n");
 
 	nft_fini(&h);
+	xtables_fini();
 	exit(!ret);
 }
 
@@ -498,7 +521,9 @@ static int xtables_restore_xlate_main(int family, const char *progname,
 		.family = family,
 	};
 	const char *file = NULL;
-	struct nft_xt_restore_parse p = {};
+	struct nft_xt_restore_parse p = {
+		.cb = &cb_xlate,
+	};
 	time_t now = time(NULL);
 	int c;
 
@@ -510,20 +535,20 @@ static int xtables_restore_xlate_main(int family, const char *progname,
 	while ((c = getopt_long(argc, argv, "hf:V", options, NULL)) != -1) {
 		switch (c) {
 		case 'h':
-			print_usage(argv[0], IPTABLES_VERSION);
+			print_usage(argv[0], PACKAGE_VERSION);
 			exit(0);
 		case 'f':
 			file = optarg;
 			break;
 		case 'V':
-			printf("%s v%s\n", argv[0], IPTABLES_VERSION);
+			printf("%s v%s\n", argv[0], PACKAGE_VERSION);
 			exit(0);
 		}
 	}
 
 	if (file == NULL) {
 		fprintf(stderr, "ERROR: missing file name\n");
-		print_usage(argv[0], IPTABLES_VERSION);
+		print_usage(argv[0], PACKAGE_VERSION);
 		exit(0);
 	}
 
@@ -534,11 +559,12 @@ static int xtables_restore_xlate_main(int family, const char *progname,
 	}
 
 	printf("# Translated by %s v%s on %s",
-	       argv[0], IPTABLES_VERSION, ctime(&now));
-	xtables_restore_parse(&h, &p, &cb_xlate, argc, argv);
+	       argv[0], PACKAGE_VERSION, ctime(&now));
+	xtables_restore_parse(&h, &p);
 	printf("# Completed on %s", ctime(&now));
 
 	nft_fini(&h);
+	xtables_fini();
 	fclose(p.in);
 	exit(0);
 }

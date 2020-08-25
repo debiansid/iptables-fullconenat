@@ -343,31 +343,34 @@ static int osf_load_line(char *buffer, int len, int del)
 	pend = xt_osf_strchr(pbeg, OSFPDEL);
 	if (pend) {
 		*pend = '\0';
-		snprintf(obuf, sizeof(obuf), "%s,", pbeg);
+		i = sizeof(obuf);
+		snprintf(obuf, i, "%.*s,", i - 2, pbeg);
 		pbeg = pend + 1;
 	}
 
 	pend = xt_osf_strchr(pbeg, OSFPDEL);
 	if (pend) {
 		*pend = '\0';
+		i = sizeof(f.genre);
 		if (pbeg[0] == '@' || pbeg[0] == '*')
-			snprintf(f.genre, sizeof(f.genre), "%s", pbeg + 1);
-		else
-			snprintf(f.genre, sizeof(f.genre), "%s", pbeg);
+			pbeg++;
+		snprintf(f.genre, i, "%.*s", i - 1, pbeg);
 		pbeg = pend + 1;
 	}
 
 	pend = xt_osf_strchr(pbeg, OSFPDEL);
 	if (pend) {
 		*pend = '\0';
-		snprintf(f.version, sizeof(f.version), "%s", pbeg);
+		i = sizeof(f.version);
+		snprintf(f.version, i, "%.*s", i - 1, pbeg);
 		pbeg = pend + 1;
 	}
 
 	pend = xt_osf_strchr(pbeg, OSFPDEL);
 	if (pend) {
 		*pend = '\0';
-		snprintf(f.subtype, sizeof(f.subtype), "%s", pbeg);
+		i = sizeof(f.subtype);
+		snprintf(f.subtype, i, "%.*s", i - 1, pbeg);
 	}
 
 	xt_osf_parse_opt(f.opt, &f.opt_num, obuf, sizeof(obuf));
@@ -375,9 +378,11 @@ static int osf_load_line(char *buffer, int len, int del)
 	memset(buf, 0, sizeof(buf));
 
 	if (del)
-		nfnl_fill_hdr(nfnlssh, nmh, 0, AF_UNSPEC, 0, OSF_MSG_REMOVE, NLM_F_REQUEST);
+		nfnl_fill_hdr(nfnlssh, nmh, 0, AF_UNSPEC, 0, OSF_MSG_REMOVE,
+			      NLM_F_ACK | NLM_F_REQUEST);
 	else
-		nfnl_fill_hdr(nfnlssh, nmh, 0, AF_UNSPEC, 0, OSF_MSG_ADD, NLM_F_REQUEST | NLM_F_CREATE);
+		nfnl_fill_hdr(nfnlssh, nmh, 0, AF_UNSPEC, 0, OSF_MSG_ADD,
+			      NLM_F_ACK | NLM_F_REQUEST | NLM_F_CREATE);
 
 	nfnl_addattr_l(nmh, sizeof(buf), OSF_ATTR_FINGER, &f, sizeof(struct xt_osf_user_finger));
 
@@ -387,7 +392,7 @@ static int osf_load_line(char *buffer, int len, int del)
 static int osf_load_entries(char *path, int del)
 {
 	FILE *inf;
-	int err = 0;
+	int err = 0, lineno = 0;
 	char buf[1024];
 
 	inf = fopen(path, "r");
@@ -397,7 +402,9 @@ static int osf_load_entries(char *path, int del)
 	}
 
 	while(fgets(buf, sizeof(buf), inf)) {
-		int len;
+		int len, rc;
+
+		lineno++;
 
 		if (buf[0] == '#' || buf[0] == '\n' || buf[0] == '\r')
 			continue;
@@ -409,9 +416,11 @@ static int osf_load_entries(char *path, int del)
 
 		buf[len] = '\0';
 
-		err = osf_load_line(buf, len, del);
-		if (err)
-			break;
+		rc = osf_load_line(buf, len, del);
+		if (rc && (!del || errno != ENOENT)) {
+			ulog_err("Failed to load line %d", lineno);
+			err = rc;
+		}
 
 		memset(buf, 0, sizeof(buf));
 	}
@@ -443,6 +452,7 @@ int main(int argc, char *argv[])
 
 	if (!fingerprints) {
 		err = -ENOENT;
+		ulog("Missing fingerprints file argument.\n");
 		goto err_out_exit;
 	}
 

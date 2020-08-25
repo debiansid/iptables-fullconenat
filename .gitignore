@@ -10,7 +10,6 @@ Makefile
 Makefile.in
 
 /include/xtables-version.h
-/include/iptables/internal.h
 
 /aclocal.m4
 /autom4te.cache/
@@ -23,3 +22,6 @@ Makefile.in
 
 /iptables/xtables-multi
 /iptables/xtables-compat-multi
+
+# vim/nano swap file
+*.swp

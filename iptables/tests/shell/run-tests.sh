@@ -38,6 +38,18 @@ while [ -n "$1" ]; do
 		HOST=y
 		shift
 		;;
+	-l|--legacy)
+		LEGACY_ONLY=y
+		shift
+		;;
+	-n|--nft)
+		NFT_ONLY=y
+		shift
+		;;
+	-V|--valgrind)
+		VALGRIND=y
+		shift
+		;;
 	*${RETURNCODE_SEPARATOR}+([0-9]))
 		SINGLE+=" $1"
 		VERBOSE=y
@@ -57,6 +69,49 @@ if [ "$HOST" != "y" ]; then
 else
 	XTABLES_NFT_MULTI="xtables-nft-multi"
 	XTABLES_LEGACY_MULTI="xtables-legacy-multi"
+fi
+
+printscript() { # (cmd, tmpd)
+	cat <<EOF
+#!/bin/bash
+
+CMD="$1"
+
+# note: valgrind man page warns about --log-file with --trace-children, the
+# last child executed overwrites previous reports unless %p or %q is used.
+# Since libtool wrapper calls exec but none of the iptables tools do, this is
+# perfect for us as it effectively hides bash-related errors
+
+valgrind --log-file=$2/valgrind.log --trace-children=yes \
+	 --leak-check=full --show-leak-kinds=all \$CMD "\$@"
+RC=\$?
+
+# don't keep uninteresting logs
+if grep -q 'no leaks are possible' $2/valgrind.log; then
+	rm $2/valgrind.log
+else
+	mv $2/valgrind.log $2/valgrind_\$\$.log
+fi
+
+# drop logs for failing commands for now
+[ \$RC -eq 0 ] || rm $2/valgrind_\$\$.log
+
+exit \$RC
+EOF
+}
+
+if [ "$VALGRIND" == "y" ]; then
+	tmpd=$(mktemp -d)
+	msg_info "writing valgrind logs to $tmpd"
+	chmod a+rx $tmpd
+	printscript "$XTABLES_NFT_MULTI" "$tmpd" >${tmpd}/xtables-nft-multi
+	printscript "$XTABLES_LEGACY_MULTI" "$tmpd" >${tmpd}/xtables-legacy-multi
+	trap "rm ${tmpd}/xtables-*-multi" EXIT
+	chmod a+x ${tmpd}/xtables-nft-multi ${tmpd}/xtables-legacy-multi
+
+	XTABLES_NFT_MULTI="${tmpd}/xtables-nft-multi"
+	XTABLES_LEGACY_MULTI="${tmpd}/xtables-legacy-multi"
+
 fi
 
 find_tests() {
@@ -98,19 +153,23 @@ do_test() {
 }
 
 echo ""
-for testfile in $(find_tests);do
-	do_test "$testfile" "$XTABLES_LEGACY_MULTI"
-done
-msg_info "legacy results: [OK] $ok [FAILED] $failed [TOTAL] $((ok+failed))"
+if [ "$NFT_ONLY" != "y" ]; then
+	for testfile in $(find_tests);do
+		do_test "$testfile" "$XTABLES_LEGACY_MULTI"
+	done
+	msg_info "legacy results: [OK] $ok [FAILED] $failed [TOTAL] $((ok+failed))"
 
+fi
 legacy_ok=$ok
 legacy_fail=$failed
 ok=0
 failed=0
-for testfile in $(find_tests);do
-	do_test "$testfile" "$XTABLES_NFT_MULTI"
-done
-msg_info "nft results: [OK] $ok [FAILED] $failed [TOTAL] $((ok+failed))"
+if [ "$LEGACY_ONLY" != "y" ]; then
+	for testfile in $(find_tests);do
+		do_test "$testfile" "$XTABLES_NFT_MULTI"
+	done
+	msg_info "nft results: [OK] $ok [FAILED] $failed [TOTAL] $((ok+failed))"
+fi
 
 ok=$((legacy_ok+ok))
 failed=$((legacy_fail+failed))
