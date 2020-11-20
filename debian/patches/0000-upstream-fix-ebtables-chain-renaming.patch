@@ -1,0 +1,60 @@
+From 55b7c71dce7144f4dc0297c17abf0f04879ee247 Mon Sep 17 00:00:00 2001
+From: Phil Sutter <phil@nwl.cc>
+Date: Tue, 17 Nov 2020 11:38:27 +0100
+Subject: ebtables: Fix for broken chain renaming
+
+Loading extensions pollutes 'errno' value, hence before using it to
+indicate failure it should be sanitized. This was done by the called
+function before the parsing/netlink split and not migrated by accident.
+Move it into calling code to clarify the connection.
+
+Fixes: a7f1e208cdf9c ("nft: split parsing from netlink commands")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+---
+ iptables/nft.c                                                | 3 ---
+ iptables/tests/shell/testcases/ebtables/0001-ebtables-basic_0 | 4 ++++
+ iptables/xtables-eb.c                                         | 1 +
+ 3 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/iptables/nft.c b/iptables/nft.c
+index 39882a44..411e2597 100644
+--- a/iptables/nft.c
++++ b/iptables/nft.c
+@@ -1896,9 +1896,6 @@ int nft_chain_user_rename(struct nft_handle *h,const char *chain,
+ 		return 0;
+ 	}
+ 
+-	/* Config load changed errno. Ensure genuine info for our callers. */
+-	errno = 0;
+-
+ 	/* Find the old chain to be renamed */
+ 	c = nft_chain_find(h, table, chain);
+ 	if (c == NULL) {
+diff --git a/iptables/tests/shell/testcases/ebtables/0001-ebtables-basic_0 b/iptables/tests/shell/testcases/ebtables/0001-ebtables-basic_0
+index 0c1eb4ca..6f11bd12 100755
+--- a/iptables/tests/shell/testcases/ebtables/0001-ebtables-basic_0
++++ b/iptables/tests/shell/testcases/ebtables/0001-ebtables-basic_0
+@@ -86,4 +86,8 @@ if [ $? -eq 0 ]; then
+ 	exit 1
+ fi
+ 
++$XT_MULTI ebtables -t filter -E FOO BAZ || exit 1
++$XT_MULTI ebtables -t filter -L | grep -q FOO && exit 1
++$XT_MULTI ebtables -t filter -L | grep -q BAZ || exit 1
++
+ $XT_MULTI ebtables -t $t -F || exit 0
+diff --git a/iptables/xtables-eb.c b/iptables/xtables-eb.c
+index 6641a21a..5e4184b8 100644
+--- a/iptables/xtables-eb.c
++++ b/iptables/xtables-eb.c
+@@ -853,6 +853,7 @@ int do_commandeb(struct nft_handle *h, int argc, char *argv[], char **table,
+ 				else if (strchr(argv[optind], ' ') != NULL)
+ 					xtables_error(PARAMETER_PROBLEM, "Use of ' ' not allowed in chain names");
+ 
++				errno = 0;
+ 				ret = nft_cmd_chain_user_rename(h, chain, *table,
+ 							    argv[optind]);
+ 				if (ret != 0 && errno == ENOENT)
+-- 
+cgit v1.2.3
+
