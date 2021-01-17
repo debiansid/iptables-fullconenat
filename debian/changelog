@@ -1,3 +1,10 @@
+iptables (1.8.7-1) unstable; urgency=medium
+
+  * [6343d36] New upstream version 1.8.7 (Closes: #975028)
+  * [b633a41] d/libxtables12.symbols: refresh file
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Sun, 17 Jan 2021 19:05:22 +0100
+
 iptables (1.8.6-1) unstable; urgency=medium
 
   * [9caffe9] New upstream version 1.8.6
