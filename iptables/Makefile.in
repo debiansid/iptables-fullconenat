@@ -158,8 +158,8 @@ am__xtables_nft_multi_SOURCES_DIST = xtables-nft-multi.c \
 	xtables-standalone.c xtables.c nft.c nft-shared.c nft-ipv4.c \
 	nft-ipv6.c nft-arp.c xtables-monitor.c nft-cache.c \
 	xtables-arp-standalone.c xtables-arp.c nft-bridge.c nft-cmd.c \
-	xtables-eb-standalone.c xtables-eb.c xtables-eb-translate.c \
-	xtables-translate.c xshared.c
+	nft-chain.c xtables-eb-standalone.c xtables-eb.c \
+	xtables-eb-translate.c xtables-translate.c xshared.c
 @ENABLE_NFTABLES_TRUE@am_xtables_nft_multi_OBJECTS = xtables_nft_multi-xtables-nft-multi.$(OBJEXT) \
 @ENABLE_NFTABLES_TRUE@	xtables_nft_multi-iptables-xml.$(OBJEXT) \
 @ENABLE_NFTABLES_TRUE@	xtables_nft_multi-xtables-save.$(OBJEXT) \
@@ -177,6 +177,7 @@ am__xtables_nft_multi_SOURCES_DIST = xtables-nft-multi.c \
 @ENABLE_NFTABLES_TRUE@	xtables_nft_multi-xtables-arp.$(OBJEXT) \
 @ENABLE_NFTABLES_TRUE@	xtables_nft_multi-nft-bridge.$(OBJEXT) \
 @ENABLE_NFTABLES_TRUE@	xtables_nft_multi-nft-cmd.$(OBJEXT) \
+@ENABLE_NFTABLES_TRUE@	xtables_nft_multi-nft-chain.$(OBJEXT) \
 @ENABLE_NFTABLES_TRUE@	xtables_nft_multi-xtables-eb-standalone.$(OBJEXT) \
 @ENABLE_NFTABLES_TRUE@	xtables_nft_multi-xtables-eb.$(OBJEXT) \
 @ENABLE_NFTABLES_TRUE@	xtables_nft_multi-xtables-eb-translate.$(OBJEXT) \
@@ -256,6 +257,7 @@ am__depfiles_remade =  \
 	./$(DEPDIR)/xtables_nft_multi-nft-arp.Po \
 	./$(DEPDIR)/xtables_nft_multi-nft-bridge.Po \
 	./$(DEPDIR)/xtables_nft_multi-nft-cache.Po \
+	./$(DEPDIR)/xtables_nft_multi-nft-chain.Po \
 	./$(DEPDIR)/xtables_nft_multi-nft-cmd.Po \
 	./$(DEPDIR)/xtables_nft_multi-nft-ipv4.Po \
 	./$(DEPDIR)/xtables_nft_multi-nft-ipv6.Po \
@@ -497,8 +499,8 @@ xtables_legacy_multi_LDADD = ../extensions/libext.a $(am__append_4) \
 @ENABLE_NFTABLES_TRUE@	nft-ipv6.c nft-arp.c xtables-monitor.c \
 @ENABLE_NFTABLES_TRUE@	nft-cache.c xtables-arp-standalone.c \
 @ENABLE_NFTABLES_TRUE@	xtables-arp.c nft-bridge.c nft-cmd.c \
-@ENABLE_NFTABLES_TRUE@	xtables-eb-standalone.c xtables-eb.c \
-@ENABLE_NFTABLES_TRUE@	xtables-eb-translate.c \
+@ENABLE_NFTABLES_TRUE@	nft-chain.c xtables-eb-standalone.c \
+@ENABLE_NFTABLES_TRUE@	xtables-eb.c xtables-eb-translate.c \
 @ENABLE_NFTABLES_TRUE@	xtables-translate.c xshared.c
 @ENABLE_NFTABLES_TRUE@xtables_nft_multi_CFLAGS = ${AM_CFLAGS} \
 @ENABLE_NFTABLES_TRUE@	$(am__append_8) -DENABLE_NFTABLES \
@@ -707,6 +709,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_nft_multi-nft-arp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_nft_multi-nft-bridge.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_nft_multi-nft-cache.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_nft_multi-nft-chain.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_nft_multi-nft-cmd.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_nft_multi-nft-ipv4.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/xtables_nft_multi-nft-ipv6.Po@am__quote@ # am--include-marker
@@ -1117,6 +1120,20 @@ xtables_nft_multi-nft-cmd.obj: nft-cmd.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_nft_multi_CFLAGS) $(CFLAGS) -c -o xtables_nft_multi-nft-cmd.obj `if test -f 'nft-cmd.c'; then $(CYGPATH_W) 'nft-cmd.c'; else $(CYGPATH_W) '$(srcdir)/nft-cmd.c'; fi`
 
+xtables_nft_multi-nft-chain.o: nft-chain.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_nft_multi_CFLAGS) $(CFLAGS) -MT xtables_nft_multi-nft-chain.o -MD -MP -MF $(DEPDIR)/xtables_nft_multi-nft-chain.Tpo -c -o xtables_nft_multi-nft-chain.o `test -f 'nft-chain.c' || echo '$(srcdir)/'`nft-chain.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_nft_multi-nft-chain.Tpo $(DEPDIR)/xtables_nft_multi-nft-chain.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='nft-chain.c' object='xtables_nft_multi-nft-chain.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_nft_multi_CFLAGS) $(CFLAGS) -c -o xtables_nft_multi-nft-chain.o `test -f 'nft-chain.c' || echo '$(srcdir)/'`nft-chain.c
+
+xtables_nft_multi-nft-chain.obj: nft-chain.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_nft_multi_CFLAGS) $(CFLAGS) -MT xtables_nft_multi-nft-chain.obj -MD -MP -MF $(DEPDIR)/xtables_nft_multi-nft-chain.Tpo -c -o xtables_nft_multi-nft-chain.obj `if test -f 'nft-chain.c'; then $(CYGPATH_W) 'nft-chain.c'; else $(CYGPATH_W) '$(srcdir)/nft-chain.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_nft_multi-nft-chain.Tpo $(DEPDIR)/xtables_nft_multi-nft-chain.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='nft-chain.c' object='xtables_nft_multi-nft-chain.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_nft_multi_CFLAGS) $(CFLAGS) -c -o xtables_nft_multi-nft-chain.obj `if test -f 'nft-chain.c'; then $(CYGPATH_W) 'nft-chain.c'; else $(CYGPATH_W) '$(srcdir)/nft-chain.c'; fi`
+
 xtables_nft_multi-xtables-eb-standalone.o: xtables-eb-standalone.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(xtables_nft_multi_CFLAGS) $(CFLAGS) -MT xtables_nft_multi-xtables-eb-standalone.o -MD -MP -MF $(DEPDIR)/xtables_nft_multi-xtables-eb-standalone.Tpo -c -o xtables_nft_multi-xtables-eb-standalone.o `test -f 'xtables-eb-standalone.c' || echo '$(srcdir)/'`xtables-eb-standalone.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/xtables_nft_multi-xtables-eb-standalone.Tpo $(DEPDIR)/xtables_nft_multi-xtables-eb-standalone.Po
@@ -1445,6 +1462,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-arp.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-bridge.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-cache.Po
+	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-chain.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-cmd.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-ipv4.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-ipv6.Po
@@ -1522,6 +1540,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-arp.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-bridge.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-cache.Po
+	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-chain.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-cmd.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-ipv4.Po
 	-rm -f ./$(DEPDIR)/xtables_nft_multi-nft-ipv6.Po
