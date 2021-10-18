@@ -15,14 +15,14 @@ fi
 # This piece of code can be dropped eventually, when we are confident user
 # systems are left in a consistent state.
 if [ "$1" = "remove" ] ; then
-	LIST="/sbin/iptables
-	     /sbin/iptables-save
-	     /sbin/iptables-restore
-	     /sbin/ip6tables
-	     /sbin/ip6tables-save
-	     /sbin/ip6tables-restore"
+	LIST="iptables
+	     iptables-save
+	     iptables-restore
+	     ip6tables
+	     ip6tables-save
+	     ip6tables-restore"
 
-	for i in $LIST ; do
+	for i in /sbin/$LIST ; do
 		if [ -L "$i" ] ; then
 			rm $i
 		fi
