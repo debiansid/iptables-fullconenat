@@ -5,6 +5,7 @@ libxtables.so.12 libxtables12 #MINVER#
  get_kernel_version@Base 1.6.0+snapshot20161117
  kernel_version@Base 1.6.0+snapshot20161117
  line@Base 1.6.0+snapshot20161117
+ xl_xlate_set_family@Base 1.8.8
  xt_params@Base 1.6.0+snapshot20161117
  xt_xlate_add@Base 1.6.0+snapshot20161117
  xt_xlate_add_comment@Base 1.6.0+snapshot20161117
@@ -12,6 +13,10 @@ libxtables.so.12 libxtables12 #MINVER#
  xt_xlate_free@Base 1.6.0+snapshot20161117
  xt_xlate_get@Base 1.6.0+snapshot20161117
  xt_xlate_get_comment@Base 1.6.0+snapshot20161117
+ xt_xlate_get_family@Base 1.8.8
+ xt_xlate_set_add@Base 1.8.8
+ xt_xlate_set_get@Base 1.8.8
+ xtables_announce_chain@Base 1.8.8
  xtables_calloc@Base 1.6.0+snapshot20161117
  xtables_chain_protos@Base 1.6.0+snapshot20161117
  xtables_compatible_revision@Base 1.6.0+snapshot20161117
@@ -81,6 +86,7 @@ libxtables.so.12 libxtables12 #MINVER#
  xtables_service_to_port@Base 1.6.0+snapshot20161117
  xtables_set_nfproto@Base 1.6.0+snapshot20161117
  xtables_set_params@Base 1.6.0+snapshot20161117
+ xtables_strdup@Base 1.8.8
  xtables_strtoui@Base 1.6.0+snapshot20161117
  xtables_strtoul@Base 1.6.0+snapshot20161117
  xtables_targets@Base 1.6.0+snapshot20161117
