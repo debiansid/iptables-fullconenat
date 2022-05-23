@@ -1,3 +1,20 @@
+iptables (1.8.8-1) unstable; urgency=medium
+
+  [ Jenkins ]
+  * [4a51d00] Remove constraints unnecessary since buster
+
+  [ Alberto Molina Coballes ]
+  * [343b01e] Update d/watch version to 4
+  * [5324ef2] Minor changes to avoid lintian warnings
+
+  [ Arturo Borrero Gonzalez ]
+  * [e1c5aa5] New upstream version 1.8.8
+  * [c570b6d] d/patches: introduce
+  0001-xshared-fix-build-for-werror-format-security.patch
+  * [4bb63cf] debian/libxtables12.symbols: refresh file
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Mon, 23 May 2022 21:17:34 +0200
+
 iptables (1.8.7-1) unstable; urgency=medium
 
   * [6343d36] New upstream version 1.8.7 (Closes: #975028)
