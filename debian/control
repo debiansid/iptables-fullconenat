@@ -68,6 +68,14 @@ Description: netfilter xtables library
  The iptables/xtables framework has been replaced by nftables. You should
  consider migrating now.
  .
+ However, even if a given system may be fully running on native nftables,
+ there are other reasons why libxtables might be installed. For one, nftables
+ itself uses it to be able to display old rulesets that were created using
+ xtables extensions (to help folks migrate). Other third-party software might
+ also be linked to this library.
+ .
+ This library being installed in the system should be harmless in any case.
+ .
  This package contains the user-space interface to the Netfilter xtables
  kernel framework.
 
