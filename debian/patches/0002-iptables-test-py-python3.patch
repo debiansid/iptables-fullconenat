@@ -1,0 +1,24 @@
+commit 043a25800b7a7e905e62574b9c47c6c2cce5c0f4
+Author: Arturo Borrero Gonzalez <arturo@netfilter.org>
+Date:   Sat Jan 14 21:46:00 2023 +0100
+
+    iptables-test.py: make explicit use of python3
+    
+    In most distros 'python' means python2, which is not available anywhere.
+    This is a problem when, for example, building the Debian package. This
+    script is called as part of the build but 'python' is not available.
+    
+    Mention python3 explictly. The script runs just fine in python3.
+    
+    Signed-off-by: Arturo Borrero Gonzalez <arturo@netfilter.org>
+
+diff --git a/iptables-test.py b/iptables-test.py
+index de1e1e95..ef0a35d3 100755
+--- a/iptables-test.py
++++ b/iptables-test.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ # (C) 2012-2013 by Pablo Neira Ayuso <pablo@netfilter.org>
+ #
