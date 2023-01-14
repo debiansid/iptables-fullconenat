@@ -94,8 +94,7 @@ Description: netfilter xtables library -- development files
 Package: libiptc0
 Architecture: linux-any
 Multi-Arch: same
-Depends: libip4tc2 (=${binary:Version}),
-         ${misc:Depends}
+Depends: libip4tc2 (=${binary:Version}), ${misc:Depends}
 Section: oldlibs
 Description: transitional dummy package
  This is a transitional package. It can safely be removed.
@@ -136,8 +135,7 @@ Package: libip4tc-dev
 Architecture: linux-any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: libip4tc2 (=${binary:Version}),
-         ${misc:Depends}
+Depends: libip4tc2 (=${binary:Version}), ${misc:Depends}
 Replaces: libiptc-dev (<< 1.8.4-2)
 Breaks: libiptc-dev (<< 1.8.4-2)
 Section: libdevel
@@ -169,8 +167,7 @@ Package: libip6tc-dev
 Architecture: linux-any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: libip6tc2 (=${binary:Version}),
-         ${misc:Depends}
+Depends: libip6tc2 (=${binary:Version}), ${misc:Depends}
 Section: libdevel
 Description: Development files for libip6tc
  The iptables/xtables framework has been replaced by nftables. You should
