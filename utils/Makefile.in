@@ -105,7 +105,8 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
+DIST_COMMON = $(srcdir)/Makefile.am $(am__dist_pkgdata_DATA_DIST) \
+	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES = nfnl_osf.8 nfbpf_compile.8
@@ -203,7 +204,8 @@ am__uninstall_files_from_dir = { \
 man8dir = $(mandir)/man8
 NROFF = nroff
 MANS = $(man_MANS)
-DATA = $(pkgdata_DATA)
+am__dist_pkgdata_DATA_DIST = pf.os
+DATA = $(dist_pkgdata_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -362,6 +364,7 @@ program_transform_name = @program_transform_name@
 psdir = @psdir@
 regular_CFLAGS = @regular_CFLAGS@
 regular_CPPFLAGS = @regular_CPPFLAGS@
+regular_LDFLAGS = @regular_LDFLAGS@
 runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
@@ -376,7 +379,8 @@ AM_CFLAGS = ${regular_CFLAGS}
 AM_CPPFLAGS = ${regular_CPPFLAGS} -I${top_builddir}/include \
               -I${top_srcdir}/include ${libnfnetlink_CFLAGS}
 
-pkgdata_DATA = $(am__append_3)
+AM_LDFLAGS = ${regular_LDFLAGS}
+dist_pkgdata_DATA = $(am__append_3)
 man_MANS = $(am__append_1) $(am__append_4)
 @HAVE_LIBNFNETLINK_TRUE@nfnl_osf_LDADD = ${libnfnetlink_LIBS}
 @ENABLE_BPFC_TRUE@nfbpf_compile_LDADD = -lpcap
@@ -566,9 +570,9 @@ uninstall-man8:
 	} | sed -e 's,.*/,,;h;s,.*\.,,;s,^[^8][0-9a-z]*$$,8,;x' \
 	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,'`; \
 	dir='$(DESTDIR)$(man8dir)'; $(am__uninstall_files_from_dir)
-install-pkgdataDATA: $(pkgdata_DATA)
+install-dist_pkgdataDATA: $(dist_pkgdata_DATA)
 	@$(NORMAL_INSTALL)
-	@list='$(pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
+	@list='$(dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
 	if test -n "$$list"; then \
 	  echo " $(MKDIR_P) '$(DESTDIR)$(pkgdatadir)'"; \
 	  $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)" || exit 1; \
@@ -582,9 +586,9 @@ install-pkgdataDATA: $(pkgdata_DATA)
 	  $(INSTALL_DATA) $$files "$(DESTDIR)$(pkgdatadir)" || exit $$?; \
 	done
 
-uninstall-pkgdataDATA:
+uninstall-dist_pkgdataDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
+	@list='$(dist_pkgdata_DATA)'; test -n "$(pkgdatadir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(pkgdatadir)'; $(am__uninstall_files_from_dir)
 
@@ -737,7 +741,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-man install-pkgdataDATA
+install-data-am: install-dist_pkgdataDATA install-man
 
 install-dvi: install-dvi-am
 
@@ -785,7 +789,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-man uninstall-pkgdataDATA \
+uninstall-am: uninstall-dist_pkgdataDATA uninstall-man \
 	uninstall-sbinPROGRAMS
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
@@ -798,16 +802,16 @@ uninstall-man: uninstall-man8
 	ctags ctags-am distclean distclean-compile distclean-generic \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-man8 install-pdf \
-	install-pdf-am install-pkgdataDATA install-ps install-ps-am \
-	install-sbinPROGRAMS install-strip installcheck \
+	install-data-am install-dist_pkgdataDATA install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-man8 install-pdf install-pdf-am install-ps \
+	install-ps-am install-sbinPROGRAMS install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am uninstall-hook \
-	uninstall-man uninstall-man8 uninstall-pkgdataDATA \
+	tags tags-am uninstall uninstall-am uninstall-dist_pkgdataDATA \
+	uninstall-hook uninstall-man uninstall-man8 \
 	uninstall-sbinPROGRAMS
 
 .PRECIOUS: Makefile
