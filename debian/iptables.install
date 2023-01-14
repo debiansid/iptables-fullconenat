@@ -1,5 +1,5 @@
-iptables/iptables-apply		usr/sbin
-iptables/iptables.xslt usr/share/iptables
+iptables/iptables-apply		        usr/sbin
+usr/share/xtables/iptables.xslt     usr/share/iptables
 usr/lib/*/xtables/libarpt_*.so
 usr/lib/*/xtables/libebt_*.so
 usr/lib/*/xtables/libip*.so

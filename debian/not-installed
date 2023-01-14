@@ -5,3 +5,4 @@ usr/lib/${DEB_TARGET_MULTIARCH}/libip6tc.la
 usr/bin/iptables-xml
 usr/share/xtables/pf.os
 etc/ethertypes
+etc/xtables.conf
