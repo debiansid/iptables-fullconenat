@@ -9,12 +9,14 @@ libxtables.so.12 libxtables12 #MINVER#
  xt_params@Base 1.6.0+snapshot20161117
  xt_xlate_add@Base 1.6.0+snapshot20161117
  xt_xlate_add_comment@Base 1.6.0+snapshot20161117
+ xt_xlate_add_nospc@Base 1.8.9
  xt_xlate_alloc@Base 1.6.0+snapshot20161117
  xt_xlate_free@Base 1.6.0+snapshot20161117
  xt_xlate_get@Base 1.6.0+snapshot20161117
  xt_xlate_get_comment@Base 1.6.0+snapshot20161117
  xt_xlate_get_family@Base 1.8.8
  xt_xlate_set_add@Base 1.8.8
+ xt_xlate_set_add_nospc@Base 1.8.9
  xt_xlate_set_get@Base 1.8.8
  xtables_announce_chain@Base 1.8.8
  xtables_calloc@Base 1.6.0+snapshot20161117
