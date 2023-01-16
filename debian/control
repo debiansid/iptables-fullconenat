@@ -16,6 +16,7 @@ Build-Depends: autoconf,
                libnfnetlink-dev,
                libnftnl-dev (>= 1.1.6),
                libtool,
+               netbase (>= 6.0),
                python3
 Standards-Version: 4.5.0
 Homepage: https://www.netfilter.org/
