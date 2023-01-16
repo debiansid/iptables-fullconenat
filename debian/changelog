@@ -1,3 +1,9 @@
+iptables (1.8.9-2) unstable; urgency=medium
+
+  * [bbe4f39] iptables: build-depend on netbase
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Mon, 16 Jan 2023 14:44:37 +0100
+
 iptables (1.8.9-1) unstable; urgency=medium
 
   * [2d27bc8] d/control: provide additional information on the libxtables descrption
