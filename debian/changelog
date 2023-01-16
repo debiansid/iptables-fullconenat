@@ -1,3 +1,20 @@
+iptables (1.8.9-1) unstable; urgency=medium
+
+  * [2d27bc8] d/control: provide additional information on the libxtables descrption
+  * [90f9323] d/gbp.conf: add file
+  * [000262d] d/watch: use tar.xz extension
+  * [d39fbee] New upstream version 1.8.9
+  * [b261f8e] d/patches: remove 0001-xshared-fix-build-for-werror-format-security.patch
+  * [874c155] d/patches: add 0001-extensions-NAT-Fix-for--Werror-format-security.patch
+  * [e8080a2] d/patches: add 0002-iptables-test-py-python3.patch
+  * [cb939e2] d/control: run wrap-and-sort
+  * [c5b6b2c] d/control: add python3 build-dep for the test scripts
+  * [db693ca] d/: drop iptables.docs file
+  * [d367dbe] iptables: account for some missing files
+  * [73eb3a3] debian/libxtables12.symbols: refresh file
+
+ -- Arturo Borrero Gonzalez <arturo@debian.org>  Mon, 16 Jan 2023 12:02:17 +0100
+
 iptables (1.8.8-1) unstable; urgency=medium
 
   [ Jenkins ]
